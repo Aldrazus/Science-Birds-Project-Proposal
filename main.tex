@@ -1,0 +1,108 @@
+
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  
+
+\IEEEoverridecommandlockouts                 
+
+\overrideIEEEmargins
+
+
+\usepackage{multibib}
+\usepackage[utf8]{inputenc}
+
+% The following packages can be found on http:\\www.ctan.org
+%\usepackage{graphics} % for pdf, bitmapped graphics files
+%\usepackage{epsfig} % for postscript graphics files
+%\usepackage{mathptmx} % assumes new font selection scheme installed
+%\usepackage{times} % assumes new font selection scheme installed
+%\usepackage{amsmath} % assumes amsmath package installed
+%\usepackage{amssymb}  % assumes amsmath package installed
+
+\title{\LARGE \bf
+Project Proposal\\
+Level Generation in Angry Birds by Evolving L-Systems
+}
+
+\author{Alberto Espinal, Matthew Laikhram\\
+New York University,\\
+New York, US\\
+ae1495@nyu.edu, mkl371@nyu.edu
+}
+
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+
+\begin{abstract}
+\textit{Angry Birds} (Rovio Entertainment, 2009) is a popular mobile puzzle game that has attracted players with its fun and complex level designs, featuring a diverse selection birds enemies and blocks keeping the game fresh and entertaining. Algorithms have recently been developed to generate levels in \textit{Angry Birds}. In the AIBIRDS Level Generation Competition, levels are generated autonomously in a program and are evaluated by judges based on how "fun", "difficult", and "creative" they are. The proposed project involves the generation of structures through L-systems. These L-systems are evolved using a genetic algorithm and a fitness function that is determined by certain attributes of it's generated structures, such as the structure stability and the number of pigs. Evolution will also be done through Interactive Evolutionary Computation to have users influence the evolution by determining which L-systems generate interesting and fun structures.
+
+\end{abstract}
+
+
+\section{INTRODUCTION}
+
+\textit{Angry Birds} (Rovio Entertainment, 2009) ~\cite{angrybirds} is a single-player puzzle video game where a variety of birds are slung at the fortresses of green pigs. The primary objective is to knock down all pigs in the level, either by a hit from a bird, or by the environment, such as TNT boxes, boulders, or falling blocks. The secondary objective is to obtain the highest score possible. The player can gain points by destroying structures, knocking out pigs, and having unused birds after the completing the level. In each level, the player often has an assortment of birds at their disposal to clear the stage. Many birds have different qualities and actions that can be performed mid-air. Each level also features a variety of blocks, environmental hazards, and pigs, which add to the complexity, variety, and fun to each of the levels.
+\par
+In addition to its worldwide popularity, \textit{Angry Birds} has also received attention from the artificial intelligence community. In recent years, researchers have begun to develop AI agents that can complete levels and successfully play the game ~\cite{aibirds2018results}. Also, algorithms for procedural content generation have been developed to create fun and interesting levels ~\cite{renz2017generating} ~\cite{jiang2017mcts} ~\cite{graves2016procedural}. Progress in this field can not only allow for the fast and cheap production of new levels, but also provide invaluable insight into game design and what makes levels "fun".
+\par
+The AIBIRDS Level Generation Competition ~\cite{birdslgc} is a competition where participants submit a program that generates levels autonomously while satisfying constraints, such as a limited number of blocks, pigs, and birds. Using the submitted program, fifty levels are generated, and six are randomly selected and evaluated based on three categories: fun, difficulty, and creativity. Many of the PCG algorithms used were experience-agnostic, as they did not incorporate the player's experience into the generation of each level.
+\par
+While some PCG algorithms combined pre-fabricated structures to form creative levels ~\cite{graves2016procedural}, others used evolutionary algorithms to evolve structures based on a given fitness function and places the structures around the levels ~\cite{renz2016procedural}. This paper proposes a novel grammar-based approach, in which rows of a structure are represented as sequences of letters in an alphabet of blocks, and rules determine the blocks in the next row based on the current row. Initially, the rules and axioms will be randomized, and the combination of a generational genetic algorithm and interactive evolutionary computation will be used to evolve these rules. This process may possibly yield an L-System that produces structures that maximize the three evaluated categories. 
+
+\section{RELATED WORK}
+
+Lucas N. Ferreira created an open source of clone of \textit{Angry Birds} called \textit{Science Birds} to be used by all participants in the AIBIRDS Level Generation Competition. The June 23, 2016 release does not have any assets from the original ~\textit{Angry Birds} and instead only has assets by Kenney ~\cite{kenney}. The full source code is available on GitHub, and can be used freely for research purposes.
+\par
+Several different PCG algorithms have been developed and incorporated in programs that autonomously generate levels for \textit{Angry Birds}. In the AIBIRDS Level Generation Competition, Jiang et al. submitted a level generator that used a search-based approach to generate levels ~\cite{jiang2017mcts}. The generator created structures of blocks and platforms holding pigs and TNT, and then used Monte Carlo Tree Search to find the best structures to use in the level. Several heuristics were used to guide the MCTS algorithm, such as block variety, pig and TNT frequency, and the closeness of the ratio used space to the golden ratio, 1.62.
+\par
+In another submission by Jiang et al., levels containing dominoes and funny quotes are created ~\cite{jiang2017funny}. Monte Carlo Tree Search is also used to find optimal levels, and it is guided by the same heuristics used in ~\cite{jiang2017mcts} as well as the legibility of generated characters that form a word. This generator is capable of creating three types of levels: levels containing quotes (e.g. "Good Luck"), formulas (e.g. "$1 + 2 = 3$"), and both words and series of pillars that create a domino effect. Both of the generators modulate the difficulty of the levels by modifying the number of pigs.
+\par
+Iratus Aves, a level generator developed by Matthew Stephenson, won the 2018 AIBIRDS Level Generation Competition using an evolutionary algorithm ~\cite{renz2017generating}. Structures are created row-by-row in a top-down manner, ensuring local stability along the way. The blocks for these structures are selected using a probability table containing the probability that each of the blocks are selected. The probability table is then optimized by generating and evaluating generations of structures with a fitness function. This fitness function evaluates certain quantifiable attributes of a level, such as the number of pigs, number of blocks, and pig dispersion. In each generation, the probability table is updated based on the fitness of the population.
+\par
+Evolutionary algorithms have played a significant role in the field of PCG. A prime example is the use of evolutionary algorithms to generate levels in Super Mario Bros. In 2010, Tomoyuki Shimizu and Tomonori Hashiyama developed an experience-driven level generator that evaluates the player's skills and preferences, and then selects parts of a level using evolutionary computation ~\cite{togelius2010level}. Evolutionary search is also being used to generate new games ~\cite{browne2010evolutionary}. 
+\par
+Interactive Evolutionary Computation (IEC) has been used to generate content where subjective human evaluation is a major component in the overall score of the content. Hideyuki Takagi describes the implementation of such methods in various use cases, such as graphic arts, speech processing, and facial image generation ~\cite{IEC}. This is done by generating the content, and then having a human-machine interface where users can evaluate the generated content through a rating or selecting system. The benefit to such a system is that humans will be able to evaluate content in a way that may not be clearly quantifiable, such as how aesthetically pleasing the content is, or how fun the content is to play. 
+\par
+The major downsides to such a system is that the unlike programmed algorithms, the user will eventually build up fatigue, which will result in lower quality evaluations. Takagi describes several approaches to lower user fatigue, such as displaying smaller sample sizes to the user as to not overwhelm them with information. However, this introduces another issue, where sample size becomes too small per generation, and could lead to not having enough information to make meaningful evolutionary steps.
+\par
+Takagi also mentions the importance of the user interface, and how its design could significantly help reduce user fatigue by making it simple and intuitive. The less actions the user has to take in order to make an evaluation, the less likely they are to become fatigued quickly. Rating systems should also not be overly complicated, as that will force the user to spend more time trying to quantify a single piece of content rather than evaluating as much content as possible. The more sparse the rating system is, the easier it will be for the user to categorize the content.
+\par
+L-systems have also been used extensively in autonomous content generation. L-systems are renown for their usage in generating plants algorithmically ~\cite{prus2015beauty}. Other grammar-based approaches have also been used in the generation of caves ~\cite{mark2015procedural}, missions, and dungeons ~\cite{dormans2010adventures} ~\cite{dormans2011generating}. However, to our knowledge, the evolution of L-systems through genetic algorithms have not been used to generate content. 
+
+
+\section{METHODS}
+
+L-systems are used to generate levels. The levels are comprised of a single structure, which consists of a group of blocks, pigs, and birds whose arrangement is determined by an XML formatted string. The structures are generated in a top-down approach. The L-system's alphabet consists of all block sizes, pigs, and empty spaces, represented as symbols. The rules will dictate how row $n$ (from the top) is generated based on row $n - 1$. The axiom contains all of the blocks in the top row.
+\par
+In the first generation of L-systems, the rules and axioms of each L-system will be initialized randomly. Each generation of L-systems will be evaluated by alternating between the use of a fitness function and the use of IEC. The fitness function will measure quantifiable features of the structure, such as block  block diversity and structure stability. The IEC approach will help filter L-systems by more subjective values, such as how fun a level is, or how interesting the structure looks. Using both approaches will hopefully help to mitigate the downsides of each individual approach while still keeping most of the benefits.
+\par
+This project is built directly off of a forked version of Ferreira's ~\textit{Science Birds} named ~\textit{Science Birds++}. The source code was originally designed to read levels from XML files and display them to the user so they can play them. The code was modified to instead generate XML strings using L-systems, and read levels from those generated strings to display for users to play. This allows for procedurally generated levels to be played without having to rely on generating XML files, which is significant since creating a Web Build requires that the XML be stored in memory instead of externally. This would allow for the game to played by users directly from their web browser, without having to download and install the game. Since the objective is to have an IEC component in the L-system evolution, making it easier for the users to access the content will make it more likely that users will take the time to play the game.
+\par
+The Level Select UI was completely overhauled to allow for user rating and proper organization of L-systems and their respective generated levels. The original UI was designed to simply display each level as a number enclosed in a box, having all levels arranged in a grid format for the user to select and play. The new design instead displays 12 L-systems in that format, but has the grid of L-systems only taking up the left half of the screen. If a user clicks on an L-system, it will display screenshots of 6 levels generated by that L-system on the right side of the screen. The user can then click on the screenshot to play the respective level. The reason screenshots of the levels are shown is to allow the user to judge a level without having to play it. This is valuable, since the level structure can be judged by just looking at the screenshot, so player fatigue can be reduced by not forcing them to play each level.
+\par
+Each L-system button has two additional buttons associated with it. The star button will allow the user to select the L-system for evolution. Since more sparse rating systems allow for less user fatigue and less baseless ratings, a binary rating system is chosen for the L-systems. If the player deems the levels generated by an L-system as fun or interesting, they simply have to select the star button to include it in the next step for evolution.
+\par
+The second button associated with a given L-system is the regenerate button. Clicking on this button will generate 6 additional levels using that L-system to replace the previously displayed levels. This allows the user to optionally get a better feel for how a certain L-system generates structures, which would give them more insight before they select their ratings. Of course this is optional once again to keep user fatigue at a minimum.
+\par
+Once a user is satisfied with their selection of L-systems, they can click on the "Submit Ratings" button displayed below the L-system grid, which will proceed to the next phase of evolution..... <TALK ABOUT THE EVOLUTION APPROACHES HERE, INCLUDING FITNESS>
+\par
+The L-systems will then evolve using a generational genetic algorithm and the fitness function previously described. This should result in an L-system that has rules and axioms that generate a "fun" and "creative" structure, where "fun" and "creativity" is based on the quantitative features included in the fitness function. 
+\par
+Then, the structures will be generated with a limited height and width and added to the level. In order to preserve structural stability, certain constraints will have to be placed on the generation of the structures. For example, the rows in the structures may have to be symmetrical in order to maintain stability. Also, each row may only include blocks of the same height (excluding pigs and non-rectangular blocks with smaller heights), and pigs and non-rectangular blocks can only be used on the top row or in any row where all other blocks are taller. The stability of each structure will also be checked after generation and can possibly be incorporated into the fitness function.
+
+\section{CONCLUSIONS}
+Therefore, L-systems in conjunction with evolutionary algorithms may possibly be utilized to autonomously generate content that is "fun" for the player. This novel approach may be able to produce levels through the combination of structures generated using evolved L-systems. However, further research is required in regards to the development of AI agents that are able to play through a level and determine if a level is winnable or not. Such an agent would be crucial to the development of autonomous level generators, as a level must be winnable in order to be considered a good level. Also, this proposal does not address the selection of birds, so further research into algorithms that can estimate the number of birds and the type of birds required to complete a level is also encouraged. 
+
+\addtolength{\textheight}{-12cm}  
+
+%References:
+\bibliographystyle{IEEEtran}
+\bibliography{bibliography}
+
+
+
+
+\end{document}
